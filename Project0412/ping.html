@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        // Ajax button click
+        $('#send').on('click',function(){
+
+            let url = new URL(window.location.href);
+            let params = url.searchParams;
+            var peng_id = params.get('peng_id');
+
+
+
+            $.ajax({
+                url:'./ping.php',
+                type:'POST',
+                data:{
+                    'content':$('#content').val(),
+                    'peng_id':peng_id
+                }
+            })
+            // Ajaxリクエストが成功した時発動
+            .done( (data) => {
+                $('.result').html(data);
+                console.log(data);
+            })
+          
+        });
+    });
+
+</script>
+
+
+<textarea id="content"></textarea>
+<button id="send">+</button>

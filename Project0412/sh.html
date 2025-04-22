@@ -1,0 +1,66 @@
+<html>
+ <meta charset="utf-8">
+<style>
+    #new_guanxi{
+        display:none;
+    }
+</style>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <script>
+$(function () {
+ $('#sh').on('click', function () {
+$.ajax({url: 'sh.php',
+ // 处理登录的PHP文件
+type: 'POST',
+data: {
+'id': $('#id').val()}
+}).done((data) => {
+    console.log(data);
+    if(data == "Not Found User"){
+document.getElementById("res").innerHTML = "no data";
+}else{
+ document.getElementById("res").innerHTML = "検索結果の会員名前："+data;
+ document.getElementById("new_guanxi").style.display = "block";
+}
+ }) 
+ });
+
+ $('#new_guanxi').on('click', function () {
+$.ajax({
+    url: 'new_guanxi.php',
+ // 处理登录的PHP文件
+type: 'POST',
+data: {
+'to_id': $('#id').val()
+}
+
+}).done((data) => {
+    console.log(data);
+  
+document.getElementById("res").innerHTML = data;
+document.getElementById("new_guanxi").style.display = "none";
+
+ }) 
+ });
+});
+
+
+
+
+</script>
+<h1></hq>友達加入ページ</h1>
+<h3>検索したい会員のid：</h3>
+<p>
+<input type="text" id="id">
+<button id="sh">sh</button><br>
+</p>
+<h3>検索結果：</h3>
+<p>
+<table>
+    <tr><td><span id="res"></span></td><td><button id='new_guanxi'> 友達を追加</button></td></tr>
+</table>
+
+</p>
+
+
+</html>

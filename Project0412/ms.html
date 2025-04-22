@@ -1,0 +1,128 @@
+<html>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+ 
+
+    setInterval(function(){ getMs(); }, 1000);
+    $(function () {
+
+
+$('#send').on('click', function () {
+    let url = window.location.href;
+
+    // 通过 ? 分割获取后面的参数字符串
+    let urlStr = url.split('?')[1]
+    // 创建空对象存储参数
+	let obj = {};
+    // 再通过 & 将每一个参数单独分割出来
+	let paramsArr = urlStr.split('&')
+	for(let i = 0,len = paramsArr.length;i < len;i++){
+        // 再通过 = 将每一个参数分割为 key:value 的形式
+		let arr = paramsArr[i].split('=')
+		obj[arr[0]] = arr[1];
+	}
+
+
+
+
+
+    $.ajax({
+        url: 'ms.php', // 处理登录的PHP文件
+        type: 'POST',
+        data: {
+            'content': $('#content').val(),
+            'to_id': obj.to_id
+        }
+    })
+    .done((data) => {
+       console.log(data);
+       
+    })
+    
+});
+
+
+
+});
+
+
+function getMs(){
+
+    $(function () {
+        let url = window.location.href;
+
+    // 通过 ? 分割获取后面的参数字符串
+    let urlStr = url.split('?')[1]
+    // 创建空对象存储参数
+	let obj = {};
+    // 再通过 & 将每一个参数单独分割出来
+	let paramsArr = urlStr.split('&')
+	for(let i = 0,len = paramsArr.length;i < len;i++){
+        // 再通过 = 将每一个参数分割为 key:value 的形式
+		let arr = paramsArr[i].split('=')
+		obj[arr[0]] = arr[1];
+	}
+    $.ajax({
+        url: 'grtMs.php', // 处理登录的PHP文件
+        type: 'POST',
+        data: {
+           
+            'to_id': obj.to_id
+        }
+    })
+    .done((data) => {
+       console.log(data);
+       document.getElementById("history").innerHTML = data;
+    })
+    
+});
+}
+</script>
+
+
+<h1>メッセージ画面</h1>
+
+
+<div id="history">
+
+
+</div>
+
+
+<p id="newms">
+
+<textarea id="content"></textarea>
+<button id="send">send</button>
+
+</p>
+
+
+
+</html>
+
+<style>
+    #history{
+        height:500px;
+        width: 300px;
+        border: 1px solid red;
+    }
+    #newms{
+        width: 300px;
+        border: 1px solid red;
+    }
+
+    #newms textarea{
+       width: 220px;
+       height: 100px;
+    }
+
+    
+    #newms button{
+       background: blue;
+       color: #fff;
+       border-radius: 4px;
+       padding: 7px;
+       margin: 10px;
+    }
+</style>

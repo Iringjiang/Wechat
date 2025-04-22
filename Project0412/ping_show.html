@@ -1,0 +1,29 @@
+<meta  charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+            let url = new URL(window.location.href);
+            let params = url.searchParams;
+            var peng_id = params.get('peng_id');
+            $.ajax({
+                url:'./ping_show.php',
+                type:'POST',
+                data:{
+                    'peng_id':peng_id
+                }
+            })
+            // Ajaxリクエストが成功した時発動
+            .done( (data) => {
+          document.getElementById("red").innerHTML = data;
+            })
+          
+        });
+ 
+   
+
+</script>
+
+<span id="red">
+
+</span>
